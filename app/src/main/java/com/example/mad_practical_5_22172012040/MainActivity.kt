@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     }
     fun OpenPhone(phone:String)
     {
-
+        Intent(Intent.ACTION_DIAL).setData(Uri.parse("tel:$phone")).also { startActivity(it) }
     }
     fun OpenCalllog()
     {
