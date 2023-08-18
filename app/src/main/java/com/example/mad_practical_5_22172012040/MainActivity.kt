@@ -4,6 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.AlarmClock
+import android.provider.CallLog
+import android.provider.MediaStore
 import android.widget.Button
 import android.widget.EditText
 
@@ -27,18 +30,18 @@ class MainActivity : AppCompatActivity() {
     }
     fun OpenCalllog()
     {
-
+        Intent(Intent.ACTION_VIEW).setType(CallLog.Calls.CONTENT_TYPE).also { startActivity(it) }
     }
     fun OpenGallary()
     {
-
+        Intent(Intent.ACTION_VIEW).setType("image/*").also { startActivity(it) }
     }
     fun OpenCamera()
     {
-
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { startActivity(it) }
     }
     fun OpenAlarm()
     {
-
+        Intent(AlarmClock.ACTION_SHOW_ALARMS).also { startActivity(it) }
     }
 }
