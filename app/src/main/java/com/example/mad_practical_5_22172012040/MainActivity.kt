@@ -9,39 +9,88 @@ import android.provider.CallLog
 import android.provider.MediaStore
 import android.widget.Button
 import android.widget.EditText
+import java.net.URL
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val browseButton:Button=findViewById(R.id.button)
-        val editTextBrowser:EditText=findViewById(R.id.btext)
-        browseButton.setOnClickListener {
-            OpenUrl(editTextBrowser.text.toString())
+        val browsebutton:Button = findViewById(R.id.button)
+        val call:Button = findViewById(R.id.button3)
+        val callog:Button = findViewById(R.id.button5)
+        val gallery:Button = findViewById(R.id.button6)
+        val camera:Button = findViewById(R.id.button7)
+        val alarm:Button = findViewById(R.id.button8)
+
+        val editTextBrowser:EditText = findViewById(R.id.btext)
+        val editTextCall:EditText = findViewById(R.id.ctext)
+
+        browsebutton.setOnClickListener {
+            openbrowse(editTextBrowser.text.toString())
+        }
+
+        call.setOnClickListener {
+            call(editTextCall.text.toString())
+        }
+        callog.setOnClickListener {
+            call_log()
+        }
+
+        gallery.setOnClickListener {
+            gallery()
+        }
+
+        camera.setOnClickListener {
+            camera()
+        }
+
+        alarm.setOnClickListener {
+            alarm()
+        }
+
+    }
+
+    fun openbrowse(s:String)
+    {
+        Intent(Intent.ACTION_VIEW, Uri.parse(s)).also {
+            startActivity(it)
         }
     }
-    fun OpenUrl(url:String)
+
+    fun call(n:String)
     {
-        Intent(Intent.ACTION_VIEW, Uri.parse(url)).also { startActivity(it) }
+        Intent(Intent.ACTION_DIAL).setData(Uri.parse("tel:$n")).also {
+            startActivity(it)
+        }
     }
-    fun OpenPhone(phone:String)
+
+    fun call_log()
     {
-        Intent(Intent.ACTION_DIAL).setData(Uri.parse("tel:$phone")).also { startActivity(it) }
+        Intent(Intent.ACTION_VIEW).setType(CallLog.Calls.CONTENT_TYPE).also {
+            startActivity(it)
+        }
     }
-    fun OpenCalllog()
+
+    fun gallery()
     {
-        Intent(Intent.ACTION_VIEW).setType(CallLog.Calls.CONTENT_TYPE).also { startActivity(it) }
+        Intent(Intent.ACTION_VIEW).setType("image/*").also {
+            startActivity(it)
+        }
     }
-    fun OpenGallary()
+
+    fun camera()
     {
-        Intent(Intent.ACTION_VIEW).setType("image/*").also { startActivity(it) }
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also {
+            startActivity(it)
+        }
     }
-    fun OpenCamera()
+
+    fun alarm()
     {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { startActivity(it) }
+        Intent(AlarmClock.ACTION_SHOW_ALARMS).also {
+            startActivity(it)
+        }
     }
-    fun OpenAlarm()
-    {
-        Intent(AlarmClock.ACTION_SHOW_ALARMS).also { startActivity(it) }
-    }
+
+
 }
